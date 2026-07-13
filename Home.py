@@ -50,22 +50,31 @@ summary_df = department_summary(df)
 # ---------------------------------------------------------------------
 VIEW_OPTIONS = ["🏠 Cluster Dashboard"] + [f"{d['icon']} {d['name']}" for d in DEPARTMENTS]
 
-with st.sidebar:
-    st.markdown("### 🏥 Srikara Hospitals")
-    selected_view = st.radio("Choose a dashboard", VIEW_OPTIONS, index=0)
-    st.divider()
-    st.caption("Data refreshes every 5 minutes.")
-
 
 def go_to_department(dept_name: str, dept_icon: str):
     """Helper so buttons on the Cluster Dashboard can jump straight to a unit view."""
-    st.session_state["_jump_to"] = f"{dept_icon} {dept_name}"
+    st.session_state["_pending_view"] = f"{dept_icon} {dept_name}"
     st.rerun()
 
 
-# If a Cluster Dashboard button asked to jump to a department, honor it.
-if "_jump_to" in st.session_state:
-    selected_view = st.session_state.pop("_jump_to")
+def go_to_cluster_dashboard():
+    """Helper so the 'Back to Cluster Dashboard' button can jump back."""
+    st.session_state["_pending_view"] = "🏠 Cluster Dashboard"
+    st.rerun()
+
+
+# Apply any pending navigation request BEFORE the radio widget below is
+# instantiated -- this is the only point in the run where it's legal to
+# set a widget's own session-state key, and it's what makes the selection
+# actually stick (not just for the next single rerun, but for good).
+if "_pending_view" in st.session_state:
+    st.session_state["sidebar_view_selector"] = st.session_state.pop("_pending_view")
+
+with st.sidebar:
+    st.markdown("### 🏥 Srikara Hospitals")
+    selected_view = st.radio("Choose a dashboard", VIEW_OPTIONS, index=0, key="sidebar_view_selector")
+    st.divider()
+    st.caption("Data refreshes every 5 minutes.")
 
 
 # =======================================================================
@@ -105,12 +114,16 @@ def render_cluster_dashboard():
 
     st.divider()
 
-    tab_overview, tab_trends, tab_deepdive, tab_raw = st.tabs(
-        ["📊 Overview", "📈 Trends & Conversion", "🔍 Department Deep-Dive", "📋 Raw Data"]
+    section = st.radio(
+        "Section",
+        ["📊 Overview", "📈 Trends & Conversion", "🔍 Department Deep-Dive", "📋 Raw Data"],
+        horizontal=True,
+        label_visibility="collapsed",
+        key="cluster_section_selector",
     )
 
-    # --- TAB 1: OVERVIEW ---
-    with tab_overview:
+    # --- SECTION: OVERVIEW ---
+    if section == "📊 Overview":
         total_kpis = len(filtered_df)
         on_track = int((filtered_df["Status"] == "On Track").sum())
         off_track = int((filtered_df["Status"] == "Off Track").sum())
@@ -226,8 +239,8 @@ def render_cluster_dashboard():
                     if st.button("Open Unit Dashboard →", key=f"jump_{dept['name']}", use_container_width=True):
                         go_to_department(dept["name"], dept["icon"])
 
-    # --- TAB 2: TRENDS & CONVERSION ---
-    with tab_trends:
+    # --- SECTION: TRENDS & CONVERSION ---
+    elif section == "📈 Trends & Conversion":
         st.subheader("Cluster-wide Trend: Last Month → MTD → Today")
         st.caption("Total of every numeric KPI in the sheet, added up across all departments, at each snapshot.")
 
@@ -277,8 +290,8 @@ def render_cluster_dashboard():
                 "conversion rates will appear here automatically."
             )
 
-    # --- TAB 3: DEEP DIVE ---
-    with tab_deepdive:
+    # --- SECTION: DEEP DIVE ---
+    elif section == "🔍 Department Deep-Dive":
         st.subheader("Compare Departments Side-by-Side")
         compare_depts = st.multiselect(
             "Choose departments to compare",
@@ -325,8 +338,8 @@ def render_cluster_dashboard():
         else:
             st.info("Pick at least one department above to compare.")
 
-    # --- TAB 4: RAW DATA ---
-    with tab_raw:
+    # --- SECTION: RAW DATA ---
+    elif section == "📋 Raw Data":
         st.subheader("Hierarchical View (Sunburst)")
         if len(filtered_df):
             sunburst_df = filtered_df.groupby(["Department", "Status"]).size().reset_index(name="Count")
@@ -355,8 +368,7 @@ def render_cluster_dashboard():
 # =======================================================================
 def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
     if st.button("← Back to Cluster Dashboard"):
-        st.session_state["_jump_to"] = "🏠 Cluster Dashboard"
-        st.rerun()
+        go_to_cluster_dashboard()
 
     st.title(f"{dept_icon} {dept_name} — Unit Dashboard")
     st.caption(f"Owner: {dept_owner}")
@@ -381,10 +393,16 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
 
     st.divider()
 
-    tab_detail, tab_trend, tab_data = st.tabs(["🎯 KPI Detail", "📈 Trend", "📋 Full Data"])
+    unit_section = st.radio(
+        "Unit section",
+        ["🎯 KPI Detail", "📈 Trend", "📋 Full Data"],
+        horizontal=True,
+        label_visibility="collapsed",
+        key="unit_section_selector",
+    )
 
     # --- KPI DETAIL ---
-    with tab_detail:
+    if unit_section == "🎯 KPI Detail":
         gauge_col, donut_col = st.columns(2)
         with gauge_col:
             st.markdown("#### Health Gauge")
@@ -453,7 +471,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
                         )
 
     # --- TREND ---
-    with tab_trend:
+    elif unit_section == "📈 Trend":
         st.subheader("Department Trend: Last Month → MTD → Today")
         dept_trend = build_department_trend(dept_df)
         if len(dept_trend) >= 2:
@@ -479,7 +497,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
                     st.plotly_chart(fig2, use_container_width=True, key=f"kpi_trend_{dept_name}_{idx}")
 
     # --- FULL DATA ---
-    with tab_data:
+    elif unit_section == "📋 Full Data":
         display_cols = ["Particulars", "Today", "MTD", "Target", "Last Month",
                         "Achievement %", "Status Icon", "Status"]
         display_cols = [c for c in display_cols if c in dept_df.columns]
