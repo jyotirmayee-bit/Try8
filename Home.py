@@ -146,7 +146,7 @@ def render_cluster_dashboard():
                 },
             ))
             gauge.update_layout(margin=dict(t=30, b=10, l=20, r=20), height=280)
-            st.plotly_chart(gauge, use_container_width=True)
+            st.plotly_chart(gauge, use_container_width=True, key="cluster_gauge")
 
         with mid:
             st.subheader("Department-wise KPI Status")
@@ -159,7 +159,7 @@ def render_cluster_dashboard():
                 fig = px.bar(chart_df, x="Department", y="Count", color="Status",
                              color_discrete_map=THEME, barmode="stack")
                 fig.update_layout(xaxis_tickangle=-30, legend_title_text="", margin=dict(t=10), height=280)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, use_container_width=True, key="cluster_status_bar")
             else:
                 st.info("No data matches the current filters.")
 
@@ -171,7 +171,7 @@ def render_cluster_dashboard():
                 fig2 = px.pie(donut_df, names="Status", values="Count", hole=0.55,
                               color="Status", color_discrete_map=THEME)
                 fig2.update_layout(showlegend=True, margin=dict(t=10), height=280)
-                st.plotly_chart(fig2, use_container_width=True)
+                st.plotly_chart(fig2, use_container_width=True, key="cluster_donut")
             else:
                 st.info("No data to show.")
 
@@ -183,7 +183,7 @@ def render_cluster_dashboard():
             fig_tree = px.treemap(treemap_df, path=["Department", "Status"], values="Count",
                                    color="Status", color_discrete_map=THEME)
             fig_tree.update_layout(margin=dict(t=10, b=10, l=10, r=10))
-            st.plotly_chart(fig_tree, use_container_width=True)
+            st.plotly_chart(fig_tree, use_container_width=True, key="cluster_treemap")
         else:
             st.info("No data matches the current filters.")
 
@@ -196,7 +196,7 @@ def render_cluster_dashboard():
                           range_color=[0, 100], text="Health Score")
             fig3.update_traces(texttemplate="%{text}%", textposition="outside")
             fig3.update_layout(coloraxis_showscale=False, margin=dict(t=10), xaxis_range=[0, 110])
-            st.plotly_chart(fig3, use_container_width=True)
+            st.plotly_chart(fig3, use_container_width=True, key="cluster_health_ranking")
         else:
             st.info("No data matches the current filters.")
 
@@ -245,7 +245,7 @@ def render_cluster_dashboard():
             fig4.update_traces(line_color=THEME["primary"], fillcolor="rgba(15,76,129,0.15)",
                                line_width=3, marker_size=10)
             fig4.update_layout(margin=dict(t=10))
-            st.plotly_chart(fig4, use_container_width=True)
+            st.plotly_chart(fig4, use_container_width=True, key="cluster_trend_area")
         else:
             st.info("Not enough numeric data across Last Month / MTD / Today yet to plot a trend.")
 
@@ -269,7 +269,7 @@ def render_cluster_dashboard():
                     marker={"color": [THEME["primary"], THEME["accent"]]},
                 ))
                 fig_funnel.update_layout(title=conv["label"], margin=dict(t=40, b=10), height=260)
-                st.plotly_chart(fig_funnel, use_container_width=True)
+                st.plotly_chart(fig_funnel, use_container_width=True, key=f"funnel_{conv['label']}")
         else:
             st.info(
                 "No matching KPI pairs found yet to calculate a conversion rate. "
@@ -291,7 +291,7 @@ def render_cluster_dashboard():
                 fig5 = px.bar(compare_df, x="Department", y="Health Score", color="Department", text="Health Score")
                 fig5.update_traces(texttemplate="%{text}%", textposition="outside")
                 fig5.update_layout(showlegend=False, margin=dict(t=10), yaxis_range=[0, 110])
-                st.plotly_chart(fig5, use_container_width=True)
+                st.plotly_chart(fig5, use_container_width=True, key="deepdive_bar")
 
                 st.dataframe(
                     compare_df[["Department", "On Track", "Off Track", "No Data", "Total KPIs", "Health Score"]],
@@ -311,7 +311,7 @@ def render_cluster_dashboard():
                             fill="toself", name=row["Department"],
                         ))
                     radar_fig.update_layout(margin=dict(t=10), height=380)
-                    st.plotly_chart(radar_fig, use_container_width=True)
+                    st.plotly_chart(radar_fig, use_container_width=True, key="deepdive_radar")
 
                 with bubble_col:
                     st.markdown("#### Size vs Health Bubble Chart")
@@ -319,7 +319,7 @@ def render_cluster_dashboard():
                                             color="Department", size_max=45, text="Department")
                     bubble_fig.update_traces(textposition="top center")
                     bubble_fig.update_layout(margin=dict(t=10), height=380, yaxis_range=[-5, 110], showlegend=False)
-                    st.plotly_chart(bubble_fig, use_container_width=True)
+                    st.plotly_chart(bubble_fig, use_container_width=True, key="deepdive_bubble")
             else:
                 st.info("No data for the selected departments under the current filters.")
         else:
@@ -333,7 +333,7 @@ def render_cluster_dashboard():
             fig_sun = px.sunburst(sunburst_df, path=["Department", "Status"], values="Count",
                                   color="Status", color_discrete_map=THEME)
             fig_sun.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=500)
-            st.plotly_chart(fig_sun, use_container_width=True)
+            st.plotly_chart(fig_sun, use_container_width=True, key="cluster_sunburst")
 
         st.divider()
         st.subheader("Full KPI Table")
@@ -400,7 +400,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
                 },
             ))
             gauge.update_layout(margin=dict(t=20, b=10, l=20, r=20), height=250)
-            st.plotly_chart(gauge, use_container_width=True)
+            st.plotly_chart(gauge, use_container_width=True, key="unit_gauge")
 
         with donut_col:
             st.markdown("#### Status Breakdown")
@@ -409,7 +409,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
             donut = px.pie(status_counts, names="Status", values="Count", hole=0.55,
                            color="Status", color_discrete_map=THEME)
             donut.update_layout(margin=dict(t=20, b=10), height=250)
-            st.plotly_chart(donut, use_container_width=True)
+            st.plotly_chart(donut, use_container_width=True, key="unit_donut")
 
         st.divider()
         st.markdown("#### Achievement % by KPI (ranked)")
@@ -419,7 +419,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
                               color="Status", color_discrete_map=THEME, text="Achievement %")
             fig_rank.update_traces(texttemplate="%{text}%", textposition="outside")
             fig_rank.update_layout(margin=dict(t=10), height=max(250, 40 * len(ranked_df)))
-            st.plotly_chart(fig_rank, use_container_width=True)
+            st.plotly_chart(fig_rank, use_container_width=True, key="unit_achievement_rank")
         else:
             st.info("No KPIs with a numeric target/achievement value yet.")
 
@@ -463,20 +463,20 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
             fig.update_traces(line_color=THEME["primary"], fillcolor="rgba(15,76,129,0.15)",
                               line_width=3, marker_size=10)
             fig.update_layout(margin=dict(t=10))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key="unit_trend_area")
         else:
             st.info("Not enough numeric data yet across Last Month / MTD / Today to plot a trend.")
 
         st.divider()
         st.subheader("Individual KPI Trends")
-        for _, row in dept_df.iterrows():
+        for idx, row in dept_df.iterrows():
             kpi_trend = build_kpi_trend(row)
             if len(kpi_trend) >= 2:
                 with st.expander(row["Particulars"]):
                     fig2 = px.bar(kpi_trend, x="Period", y="Value", text="Value")
                     fig2.update_traces(marker_color=THEME["accent"])
                     fig2.update_layout(margin=dict(t=10), height=280)
-                    st.plotly_chart(fig2, use_container_width=True)
+                    st.plotly_chart(fig2, use_container_width=True, key=f"kpi_trend_{dept_name}_{idx}")
 
     # --- FULL DATA ---
     with tab_data:
