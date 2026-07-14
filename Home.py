@@ -261,16 +261,17 @@ def render_cluster_dashboard():
             gauge = go.Figure(go.Indicator(
                 mode="gauge+number",
                 value=overall_health,
-                number={"suffix": "%"},
+                number={"suffix": "%", "font": {"color": "#0b5f6b"}},
                 gauge={
                     "axis": {"range": [0, 100]},
-                    "bar": {"color": THEME["primary"]},
+                    "bar": {"color": THEME["gauge_bar"]},
+                    "bgcolor": "#ffffff",
                     "steps": [
-                        {"range": [0, 50], "color": "#fee2e2"},
-                        {"range": [50, 80], "color": "#fef3c7"},
-                        {"range": [80, 100], "color": "#dcfce7"},
+                        {"range": [0, 50], "color": "#f9e3e3"},
+                        {"range": [50, 80], "color": "#faf3d9"},
+                        {"range": [80, 100], "color": "#e3f2e8"},
                     ],
-                    "threshold": {"line": {"color": "red", "width": 3}, "value": 80},
+                    "threshold": {"line": {"color": "#e08a8a", "width": 3}, "value": 80},
                 },
             ))
             gauge.update_layout(margin=dict(t=30, b=10, l=20, r=20), height=280)
@@ -325,7 +326,7 @@ def render_cluster_dashboard():
         if len(filtered_summary):
             ranked = filtered_summary.sort_values("Health Score", ascending=True)
             fig3 = px.bar(ranked, x="Health Score", y="Department", orientation="h",
-                          color="Health Score", color_continuous_scale=["#f2a8a8", "#e8c581", "#9bd4b8"],
+                          color="Health Score", color_continuous_scale=["#f4c6c6", "#f5e6a8", "#b8e0c8"],
                           range_color=[0, 100], text="Health Score")
             fig3.update_traces(texttemplate="%{text}%", textposition="outside")
             fig3.update_layout(coloraxis_showscale=False, margin=dict(t=10), xaxis_range=[0, 110])
@@ -531,13 +532,14 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
         with gauge_col:
             st.markdown("#### Health Gauge")
             gauge = go.Figure(go.Indicator(
-                mode="gauge+number", value=health_score, number={"suffix": "%"},
+                mode="gauge+number", value=health_score, number={"suffix": "%", "font": {"color": "#0b5f6b"}},
                 gauge={
-                    "axis": {"range": [0, 100]}, "bar": {"color": THEME["primary"]},
+                    "axis": {"range": [0, 100]}, "bar": {"color": THEME["gauge_bar"]},
+                    "bgcolor": "#ffffff",
                     "steps": [
-                        {"range": [0, 50], "color": "#fee2e2"},
-                        {"range": [50, 80], "color": "#fef3c7"},
-                        {"range": [80, 100], "color": "#dcfce7"},
+                        {"range": [0, 50], "color": "#f9e3e3"},
+                        {"range": [50, 80], "color": "#faf3d9"},
+                        {"range": [80, 100], "color": "#e3f2e8"},
                     ],
                 },
             ))
