@@ -24,18 +24,18 @@ THEME = {
     "No Data": "#5c6f8a",        # muted slate blue-gray
     "Not Measurable": "#b39ddb", # light purple/lavender
     "primary": "#4fc3f7",        # light blue -- headings/branding/lines
-    "secondary": "#1f3a5f",      # deep navy accent
+    "secondary": "#3f4a4f",      # dark slate gray accent
     "accent": "#ffd93d",         # bright yellow accent
     "gauge_bar": "#4fc3f7",      # light blue gauge fill
-    "background": "#0f1a2e",     # dark navy page background
+    "background": "#21282b",     # dark slate gray page background
 }
 
 # Palette used for treemap/sunburst PARENT-level boxes (e.g. each
 # Department), cycling through navy / yellow / purple / blue / orange so the
 # whole chart reads as one consistent "dark dashboard" family.
 TREEMAP_SEQUENCE = [
-    "#1f3a5f", "#ffd93d", "#b39ddb", "#4fc3f7", "#f4a259",
-    "#1f3a5f", "#ffd93d", "#b39ddb", "#4fc3f7", "#f4a259",
+    "#3f4a4f", "#ffd93d", "#b39ddb", "#4fc3f7", "#f4a259",
+    "#3f4a4f", "#ffd93d", "#b39ddb", "#4fc3f7", "#f4a259",
 ]
 
 STATUS_COLORS = {
