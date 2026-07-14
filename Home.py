@@ -16,9 +16,10 @@ import plotly.graph_objects as go
 from data_loader import load_master_data
 from utils import (
     add_status_column, department_summary, compute_conversion_metrics,
-    build_kpi_trend, build_department_trend, THEME,
+    build_kpi_trend, build_department_trend, THEME, TREEMAP_SEQUENCE,
 )
 from config import DEPARTMENTS
+from logo_data import LOGO_BASE64
 
 st.set_page_config(
     page_title="Srikara Hospitals | Dashboard",
@@ -45,30 +46,37 @@ st.markdown("""
         box-shadow: 0 4px 14px rgba(11, 95, 107, 0.25);
     }
     .srikara-banner .logo-badge {
-        width: 58px;
-        height: 58px;
-        min-width: 58px;
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
         border-radius: 50%;
         background: #ffffff;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 30px;
+        overflow: hidden;
         box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        padding: 6px;
+    }
+    .srikara-banner .logo-badge img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
     .srikara-banner .banner-text h1 {
-        color: #ffffff;
+        color: #ffffff !important;
         font-size: 1.9rem;
         font-weight: 800;
         letter-spacing: 0.5px;
         margin: 0;
         line-height: 1.15;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.25);
     }
     .srikara-banner .banner-text p {
-        color: #d9f0ee;
+        color: #eaf7f5 !important;
         font-size: 1rem;
         margin: 4px 0 0 0;
-        font-weight: 400;
+        font-weight: 500;
     }
 
     /* ---------- KPI metric cards ---------- */
@@ -139,10 +147,12 @@ st.markdown("""
 
 
 def render_logo_banner(subtitle: str):
-    """Professional hospital-style banner with logo badge, shown at the top of every view."""
+    """Professional hospital-style banner with the real Srikara logo, shown at the top of every view."""
     st.markdown(f"""
     <div class="srikara-banner">
-        <div class="logo-badge">🏥</div>
+        <div class="logo-badge">
+            <img src="data:image/png;base64,{LOGO_BASE64}" alt="Srikara Hospitals logo" />
+        </div>
         <div class="banner-text">
             <h1>SRIKARA HOSPITALS</h1>
             <p>{subtitle}</p>
@@ -305,7 +315,12 @@ def render_cluster_dashboard():
         if len(filtered_df):
             treemap_df = filtered_df.groupby(["Department", "Status"]).size().reset_index(name="Count")
             fig_tree = px.treemap(treemap_df, path=["Department", "Status"], values="Count",
-                                   color="Status", color_discrete_map=THEME)
+                                   color="Status", color_discrete_map=THEME,
+                                   color_discrete_sequence=TREEMAP_SEQUENCE)
+            fig_tree.update_traces(
+                textfont=dict(color="#22333a", size=14, family="Arial Black"),
+                marker=dict(line=dict(color="#ffffff", width=2)),
+            )
             fig_tree.update_layout(margin=dict(t=10, b=10, l=10, r=10))
             st.plotly_chart(fig_tree, use_container_width=True, key="cluster_treemap")
         else:
@@ -316,7 +331,7 @@ def render_cluster_dashboard():
         if len(filtered_summary):
             ranked = filtered_summary.sort_values("Health Score", ascending=True)
             fig3 = px.bar(ranked, x="Health Score", y="Department", orientation="h",
-                          color="Health Score", color_continuous_scale=["#dc2626", "#f59e0b", "#16a34a"],
+                          color="Health Score", color_continuous_scale=["#f08a8a", "#e0b45c", "#6fbf9b"],
                           range_color=[0, 100], text="Health Score")
             fig3.update_traces(texttemplate="%{text}%", textposition="outside")
             fig3.update_layout(coloraxis_showscale=False, margin=dict(t=10), xaxis_range=[0, 110])
@@ -455,7 +470,12 @@ def render_cluster_dashboard():
         if len(filtered_df):
             sunburst_df = filtered_df.groupby(["Department", "Status"]).size().reset_index(name="Count")
             fig_sun = px.sunburst(sunburst_df, path=["Department", "Status"], values="Count",
-                                  color="Status", color_discrete_map=THEME)
+                                  color="Status", color_discrete_map=THEME,
+                                  color_discrete_sequence=TREEMAP_SEQUENCE)
+            fig_sun.update_traces(
+                textfont=dict(color="#22333a", size=13, family="Arial Black"),
+                marker=dict(line=dict(color="#ffffff", width=2)),
+            )
             fig_sun.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=500)
             st.plotly_chart(fig_sun, use_container_width=True, key="cluster_sunburst")
 
