@@ -14,20 +14,28 @@ import pandas as pd
 
 # ---------------------------------------------------------------------------
 # COLOR THEME  (used everywhere so every chart/page looks consistent)
-# A calmer, professional "hospital" palette -- deep teal as the anchor color,
-# softer status colors so the dashboard reads as clinical and trustworthy
-# rather than alarm-heavy.
+# A fresh, light "hospital" palette -- deep teal as the anchor color for
+# headings/branding, softer pastel tones for chart status colors so the
+# dashboard reads as calm and clinical rather than alarm-heavy.
 # ---------------------------------------------------------------------------
 THEME = {
-    "On Track": "#2e8b74",       # calm teal-green
-    "Off Track": "#d64545",      # muted clinical red (not neon)
-    "No Data": "#a3aab5",        # soft slate gray
-    "Not Measurable": "#4a7fb5", # soft steel blue
+    "On Track": "#6fbf9b",       # fresh pastel mint-green
+    "Off Track": "#f08a8a",      # soft pastel coral-red
+    "No Data": "#c3cad3",        # light pastel gray
+    "Not Measurable": "#8fb8e0", # soft pastel sky blue
     "primary": "#0b5f6b",        # deep teal -- the hospital's anchor color
     "secondary": "#0e7c86",      # lighter teal for gradients/accents
-    "accent": "#d9a441",         # warm gold accent (used sparingly)
+    "accent": "#e0b45c",         # warm pastel gold accent (used sparingly)
     "background": "#f4f9f9",     # very light teal-tinted background
 }
+
+# Soft pastel palette used for treemap/sunburst PARENT-level boxes (e.g. each
+# Department), so those boxes read as fresh and light rather than the bold
+# default plotly qualitative colors.
+TREEMAP_SEQUENCE = [
+    "#cfe3e0", "#d9d3ea", "#f6dcd3", "#d6e8d0", "#f7e6b8",
+    "#d3e3f0", "#eed6e6", "#dcecec", "#e6ddd0", "#d8e0ef",
+]
 
 STATUS_COLORS = {
     "On Track": "🟢",
