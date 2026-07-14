@@ -19,22 +19,23 @@ import pandas as pd
 # dashboard reads as calm and clinical rather than alarm-heavy.
 # ---------------------------------------------------------------------------
 THEME = {
-    "On Track": "#9bd4b8",       # light pastel mint-green
-    "Off Track": "#f2a8a8",      # light pastel coral-red
-    "No Data": "#d5dae0",        # very light pastel gray
-    "Not Measurable": "#aecbe8", # light pastel sky blue
-    "primary": "#0b5f6b",        # deep teal -- the hospital's anchor color (kept for headings/branding)
-    "secondary": "#0e7c86",      # lighter teal for gradients/accents
-    "accent": "#e8c581",         # light pastel gold accent (used sparingly)
-    "background": "#f4f9f9",     # very light teal-tinted background
+    "On Track": "#b8e0c8",       # light pastel green
+    "Off Track": "#f4c6c6",      # light pastel rose (softer than red, still reads as "attention")
+    "No Data": "#d7e3ef",        # light pastel blue
+    "Not Measurable": "#ddd3ef", # light pastel purple/lavender
+    "primary": "#0b5f6b",        # deep teal -- kept only for text/branding, never for large fills
+    "secondary": "#0e7c86",      # teal for gradients/accents (text-scale use only)
+    "accent": "#f5e6a8",         # light pastel yellow accent
+    "gauge_bar": "#9fd3d9",      # light pastel teal for gauge needles/bars (replaces the dark teal fill)
+    "background": "#f4f9f9",     # very light teal-tinted page background
 }
 
 # Soft pastel palette used for treemap/sunburst PARENT-level boxes (e.g. each
-# Department), so those boxes read as fresh and light rather than the bold
-# default plotly qualitative colors.
+# Department), cycling through light blue / yellow / purple / green so the
+# whole chart reads as one consistent light pastel family.
 TREEMAP_SEQUENCE = [
-    "#dcebe8", "#e5e0f0", "#faeae3", "#e3f0de", "#faf0d2",
-    "#e0edf6", "#f5e5ee", "#e6f2f2", "#f0e9dd", "#e5eaf5",
+    "#d7e3ef", "#f5e6a8", "#ddd3ef", "#c5e8d4", "#f4d9c6",
+    "#d7e3ef", "#f5e6a8", "#ddd3ef", "#c5e8d4", "#f4d9c6",
 ]
 
 STATUS_COLORS = {
