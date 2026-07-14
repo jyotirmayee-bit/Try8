@@ -38,48 +38,39 @@ st.markdown("""
     .srikara-banner {
         display: flex;
         align-items: center;
-        gap: 18px;
-        background: linear-gradient(135deg, #0b5f6b 0%, #0e7c86 100%);
-        padding: 22px 28px;
+        gap: 22px;
+        background: linear-gradient(120deg, #0e6b73 0%, #16949c 100%);
+        padding: 18px 28px;
         border-radius: 14px;
         margin-bottom: 22px;
-        box-shadow: 0 4px 14px rgba(11, 95, 107, 0.25);
+        box-shadow: 0 3px 10px rgba(11, 95, 107, 0.18);
     }
     .srikara-banner .logo-badge {
-        width: 64px;
-        height: 64px;
-        min-width: 64px;
-        border-radius: 50%;
+        width: 210px;
+        height: 84px;
+        min-width: 210px;
+        border-radius: 12px;
         background: #ffffff;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-        padding: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        padding: 8px 14px;
     }
     .srikara-banner .logo-badge img {
         width: 100%;
         height: 100%;
         object-fit: contain;
     }
-    .srikara-banner .banner-text h1 {
-        color: #ffffff !important;
-        font-size: 1.9rem;
-        font-weight: 800;
-        letter-spacing: 0.5px;
-        margin: 0;
-        line-height: 1.15;
-        text-shadow: 0 1px 3px rgba(0,0,0,0.25);
-    }
     .srikara-banner .banner-text p {
-        color: #eaf7f5 !important;
-        font-size: 1rem;
         margin: 4px 0 0 0;
         font-weight: 500;
+        font-size: 1rem;
     }
 
     /* ---------- KPI metric cards ---------- */
+
     div[data-testid="stMetric"] {
         background: #ffffff;
         border: 1px solid #d8e8e6;
@@ -154,8 +145,11 @@ def render_logo_banner(subtitle: str):
             <img src="data:image/png;base64,{LOGO_BASE64}" alt="Srikara Hospitals logo" />
         </div>
         <div class="banner-text">
-            <h1>SRIKARA HOSPITALS</h1>
-            <p>{subtitle}</p>
+            <h1 style="color:#ffffff; font-size:1.9rem; font-weight:800; letter-spacing:0.5px;
+                       margin:0; line-height:1.15; text-shadow:0 1px 3px rgba(0,0,0,0.25);">
+                SRIKARA HOSPITALS
+            </h1>
+            <p style="color:#eaf7f5; margin:4px 0 0 0; font-weight:500; font-size:1rem;">{subtitle}</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -331,7 +325,7 @@ def render_cluster_dashboard():
         if len(filtered_summary):
             ranked = filtered_summary.sort_values("Health Score", ascending=True)
             fig3 = px.bar(ranked, x="Health Score", y="Department", orientation="h",
-                          color="Health Score", color_continuous_scale=["#f08a8a", "#e0b45c", "#6fbf9b"],
+                          color="Health Score", color_continuous_scale=["#f2a8a8", "#e8c581", "#9bd4b8"],
                           range_color=[0, 100], text="Health Score")
             fig3.update_traces(texttemplate="%{text}%", textposition="outside")
             fig3.update_layout(coloraxis_showscale=False, margin=dict(t=10), xaxis_range=[0, 110])
