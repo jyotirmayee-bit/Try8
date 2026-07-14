@@ -187,7 +187,17 @@ if "_pending_view" in st.session_state:
     st.session_state["sidebar_view_selector"] = st.session_state.pop("_pending_view")
 
 with st.sidebar:
-    st.markdown("### 🏥 Srikara Hospitals")
+    st.markdown(f"""
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+        <div style="width:40px; height:40px; min-width:40px; border-radius:8px; background:#ffffff;
+                    display:flex; align-items:center; justify-content:center; overflow:hidden;
+                    box-shadow:0 1px 4px rgba(11,95,107,0.2); padding:3px;">
+            <img src="data:image/png;base64,{LOGO_BASE64}" alt="Srikara Hospitals logo"
+                 style="width:100%; height:100%; object-fit:contain;" />
+        </div>
+        <span style="font-size:1.25rem; font-weight:800; color:#0b5f6b;">Srikara Hospitals</span>
+    </div>
+    """, unsafe_allow_html=True)
     selected_view = st.radio("Choose a dashboard", VIEW_OPTIONS, index=0, key="sidebar_view_selector")
     st.divider()
     st.caption("Data refreshes every 5 minutes.")
@@ -669,3 +679,4 @@ else:
         render_unit_dashboard(matched["name"], matched["icon"], matched["owner"])
     else:
         st.error("Unknown view selected. Please choose again from the sidebar.")
+        
