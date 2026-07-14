@@ -608,12 +608,15 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
                     col_a, col_b = st.columns([3, 1])
                     with col_a:
                         st.markdown(
-                            f"<span style='font-size:1.15rem; font-weight:700; color:#4fc3f7;'>{row['Particulars']}</span>",
+                            f"<span style='font-size:1.15rem; font-weight:700; color:#0b5f6b;'>{row['Particulars']}</span>",
                             unsafe_allow_html=True,
                         )
-                        st.caption(
+                        st.markdown(
+                            f"<span style='font-size:1.05rem; color:#3a4a4f;'>"
                             f"Today: {row.get('Today', 'N/A')} • MTD: {row.get('MTD', 'N/A')} • "
                             f"Target: {row.get('Target', 'N/A')} • Last Month: {row.get('Last Month', 'N/A')}"
+                            f"</span>",
+                            unsafe_allow_html=True,
                         )
                         achievement = row.get("Achievement %")
                         if achievement is not None and pd.notna(achievement):
@@ -679,4 +682,3 @@ else:
         render_unit_dashboard(matched["name"], matched["icon"], matched["owner"])
     else:
         st.error("Unknown view selected. Please choose again from the sidebar.")
-        
