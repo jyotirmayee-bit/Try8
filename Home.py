@@ -123,7 +123,7 @@ st.markdown("""
         background: #ffffff !important;
     }
     div[data-testid="stVerticalBlockBorderWrapper"] h3 {
-        font-size: 1.15rem !important;
+        font-size: 1.3rem !important;
         color: #0b5f6b !important;
     }
 
@@ -188,10 +188,10 @@ if "_pending_view" in st.session_state:
 
 with st.sidebar:
     st.markdown(f"""
-    <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-        <div style="width:40px; height:40px; min-width:40px; border-radius:8px; background:#ffffff;
+    <div style="display:flex; flex-direction:column; align-items:flex-start; gap:8px; margin-bottom:8px;">
+        <div style="width:64px; height:64px; min-width:64px; border-radius:10px; background:#ffffff;
                     display:flex; align-items:center; justify-content:center; overflow:hidden;
-                    box-shadow:0 1px 4px rgba(11,95,107,0.2); padding:3px;">
+                    box-shadow:0 1px 4px rgba(11,95,107,0.2); padding:4px;">
             <img src="data:image/png;base64,{LOGO_BASE64}" alt="Srikara Hospitals logo"
                  style="width:100%; height:100%; object-fit:contain;" />
         </div>
@@ -298,9 +298,12 @@ def render_cluster_dashboard():
                 )
                 fig = px.bar(chart_df, x="Department", y="Count", color="Status",
                              color_discrete_map=THEME, barmode="stack")
-                fig.update_layout(xaxis_tickangle=-30, legend_title_text="", margin=dict(t=10), height=280,
+                fig.update_layout(xaxis_tickangle=-30, legend_title_text="", margin=dict(t=10), height=300,
                                   paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                                  font={"color": "#2b3a3d"})
+                                  font={"color": "#2b3a3d", "size": 14},
+                                  xaxis=dict(title_font=dict(size=15), tickfont=dict(size=13)),
+                                  yaxis=dict(title_font=dict(size=15), tickfont=dict(size=13)),
+                                  legend=dict(font=dict(size=13)))
                 st.plotly_chart(fig, use_container_width=True, key="cluster_status_bar")
             else:
                 st.info("No data matches the current filters.")
@@ -342,10 +345,13 @@ def render_cluster_dashboard():
             fig3 = px.bar(ranked, x="Health Score", y="Department", orientation="h",
                           color="Health Score", color_continuous_scale=["#123a52", "#2d6f97", "#4fc3f7"],
                           range_color=[0, 100], text="Health Score")
-            fig3.update_traces(texttemplate="%{text}%", textposition="outside")
+            fig3.update_traces(texttemplate="%{text}%", textposition="outside",
+                               textfont=dict(size=13))
             fig3.update_layout(coloraxis_showscale=False, margin=dict(t=10), xaxis_range=[0, 110],
                                paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                               font={"color": "#2b3a3d"})
+                               font={"color": "#2b3a3d", "size": 14},
+                               xaxis=dict(title_font=dict(size=15), tickfont=dict(size=13)),
+                               yaxis=dict(title_font=dict(size=15), tickfont=dict(size=14)))
             st.plotly_chart(fig3, use_container_width=True, key="cluster_health_ranking")
         else:
             st.info("No data matches the current filters.")
@@ -372,7 +378,11 @@ def render_cluster_dashboard():
             with cols[i % 3]:
                 with st.container(border=True):
                     st.markdown(f"### {dept['icon']} {dept['name']}")
-                    st.caption(f"{total} KPIs • {off} off track • {health}% healthy")
+                    st.markdown(
+                        f"<span style='font-size:1rem; color:#3a4a4f;'>"
+                        f"{total} KPIs • {off} off track • {health}% healthy</span>",
+                        unsafe_allow_html=True,
+                    )
                     if st.button("Open Unit Dashboard →", key=f"jump_{dept['name']}", use_container_width=True):
                         go_to_department(dept["name"], dept["icon"])
 
