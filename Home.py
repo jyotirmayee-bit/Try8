@@ -31,7 +31,7 @@ st.markdown("""
 <style>
     /* ---------- Overall app background ---------- */
     .stApp {
-        background-color: #0f1a2e;
+        background-color: #21282b;
     }
 
     /* ---------- Logo / hospital banner ---------- */
@@ -39,7 +39,7 @@ st.markdown("""
         display: flex;
         align-items: center;
         gap: 22px;
-        background: linear-gradient(120deg, #16213e 0%, #1f3a5f 100%);
+        background: linear-gradient(120deg, #2a3236 0%, #39444a 100%);
         padding: 18px 28px;
         border-radius: 14px;
         margin-bottom: 22px;
@@ -72,8 +72,8 @@ st.markdown("""
     /* ---------- KPI metric cards ---------- */
 
     div[data-testid="stMetric"] {
-        background: #16213e;
-        border: 1px solid #26314a;
+        background: #2a3236;
+        border: 1px solid #3f4a4f;
         border-left: 5px solid #4fc3f7;
         border-radius: 12px;
         padding: 16px 18px 12px 18px;
@@ -97,8 +97,8 @@ st.markdown("""
 
     /* ---------- Sidebar ---------- */
     section[data-testid="stSidebar"] {
-        background-color: #16213e;
-        border-right: 1px solid #26314a;
+        background-color: #2a3236;
+        border-right: 1px solid #3f4a4f;
     }
     section[data-testid="stSidebar"] h3 {
         color: #4fc3f7;
@@ -107,8 +107,8 @@ st.markdown("""
 
     /* ---------- Section radio buttons (look like professional tabs) ---------- */
     div[role="radiogroup"] label {
-        background: #16213e;
-        border: 1px solid #26314a;
+        background: #2a3236;
+        border: 1px solid #3f4a4f;
         border-radius: 8px;
         padding: 6px 14px;
         margin-right: 6px;
@@ -119,8 +119,8 @@ st.markdown("""
     /* ---------- Department cards ---------- */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         border-radius: 12px !important;
-        border: 1px solid #26314a !important;
-        background: #16213e !important;
+        border: 1px solid #3f4a4f !important;
+        background: #2a3236 !important;
     }
     div[data-testid="stVerticalBlockBorderWrapper"] h3 {
         font-size: 1.15rem !important;
@@ -131,7 +131,7 @@ st.markdown("""
     div[data-testid="stDataFrame"] {
         border-radius: 10px;
         overflow: hidden;
-        border: 1px solid #26314a;
+        border: 1px solid #3f4a4f;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -265,11 +265,11 @@ def render_cluster_dashboard():
                 gauge={
                     "axis": {"range": [0, 100]},
                     "bar": {"color": THEME["gauge_bar"]},
-                    "bgcolor": "#16213e",
+                    "bgcolor": "#2a3236",
                     "steps": [
-                        {"range": [0, 50], "color": "#2a2140"},
-                        {"range": [50, 80], "color": "#3a3320"},
-                        {"range": [80, 100], "color": "#1c3347"},
+                        {"range": [0, 50], "color": "#2c3336"},
+                        {"range": [50, 80], "color": "#333c40"},
+                        {"range": [80, 100], "color": "#26343a"},
                     ],
                     "threshold": {"line": {"color": "#ffd93d", "width": 3}, "value": 80},
                 },
@@ -317,8 +317,8 @@ def render_cluster_dashboard():
                                    color="Status", color_discrete_map=THEME,
                                    color_discrete_sequence=TREEMAP_SEQUENCE)
             fig_tree.update_traces(
-                textfont=dict(color="#0f1a2e", size=14, family="Arial Black"),
-                marker=dict(line=dict(color="#0f1a2e", width=2)),
+                textfont=dict(color="#21282b", size=14, family="Arial Black"),
+                marker=dict(line=dict(color="#21282b", width=2)),
             )
             fig_tree.update_layout(margin=dict(t=10, b=10, l=10, r=10), paper_bgcolor="rgba(0,0,0,0)")
             st.plotly_chart(fig_tree, use_container_width=True, key="cluster_treemap")
@@ -330,7 +330,7 @@ def render_cluster_dashboard():
         if len(filtered_summary):
             ranked = filtered_summary.sort_values("Health Score", ascending=True)
             fig3 = px.bar(ranked, x="Health Score", y="Department", orientation="h",
-                          color="Health Score", color_continuous_scale=["#ffd93d", "#5c6f8a", "#4fc3f7"],
+                          color="Health Score", color_continuous_scale=["#123a52", "#2d6f97", "#4fc3f7"],
                           range_color=[0, 100], text="Health Score")
             fig3.update_traces(texttemplate="%{text}%", textposition="outside")
             fig3.update_layout(coloraxis_showscale=False, margin=dict(t=10), xaxis_range=[0, 110],
@@ -481,8 +481,8 @@ def render_cluster_dashboard():
                                   color="Status", color_discrete_map=THEME,
                                   color_discrete_sequence=TREEMAP_SEQUENCE)
             fig_sun.update_traces(
-                textfont=dict(color="#0f1a2e", size=13, family="Arial Black"),
-                marker=dict(line=dict(color="#0f1a2e", width=2)),
+                textfont=dict(color="#21282b", size=13, family="Arial Black"),
+                marker=dict(line=dict(color="#21282b", width=2)),
             )
             fig_sun.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=500, paper_bgcolor="rgba(0,0,0,0)")
             st.plotly_chart(fig_sun, use_container_width=True, key="cluster_sunburst")
@@ -548,11 +548,11 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
                 mode="gauge+number", value=health_score, number={"suffix": "%", "font": {"color": "#4fc3f7"}},
                 gauge={
                     "axis": {"range": [0, 100]}, "bar": {"color": THEME["gauge_bar"]},
-                    "bgcolor": "#16213e",
+                    "bgcolor": "#2a3236",
                     "steps": [
-                        {"range": [0, 50], "color": "#2a2140"},
-                        {"range": [50, 80], "color": "#3a3320"},
-                        {"range": [80, 100], "color": "#1c3347"},
+                        {"range": [0, 50], "color": "#2c3336"},
+                        {"range": [50, 80], "color": "#333c40"},
+                        {"range": [80, 100], "color": "#26343a"},
                     ],
                 },
             ))
