@@ -28,15 +28,127 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    div[data-testid="stMetric"] {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 14px 16px 8px 16px;
+    /* ---------- Overall app background ---------- */
+    .stApp {
+        background-color: #f4f9f9;
     }
-    div[data-testid="stMetricValue"] { font-size: 1.6rem; }
+
+    /* ---------- Logo / hospital banner ---------- */
+    .srikara-banner {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        background: linear-gradient(135deg, #0b5f6b 0%, #0e7c86 100%);
+        padding: 22px 28px;
+        border-radius: 14px;
+        margin-bottom: 22px;
+        box-shadow: 0 4px 14px rgba(11, 95, 107, 0.25);
+    }
+    .srikara-banner .logo-badge {
+        width: 58px;
+        height: 58px;
+        min-width: 58px;
+        border-radius: 50%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .srikara-banner .banner-text h1 {
+        color: #ffffff;
+        font-size: 1.9rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        margin: 0;
+        line-height: 1.15;
+    }
+    .srikara-banner .banner-text p {
+        color: #d9f0ee;
+        font-size: 1rem;
+        margin: 4px 0 0 0;
+        font-weight: 400;
+    }
+
+    /* ---------- KPI metric cards ---------- */
+    div[data-testid="stMetric"] {
+        background: #ffffff;
+        border: 1px solid #d8e8e6;
+        border-left: 5px solid #0b5f6b;
+        border-radius: 12px;
+        padding: 16px 18px 12px 18px;
+        box-shadow: 0 2px 6px rgba(11, 95, 107, 0.07);
+    }
+    div[data-testid="stMetricValue"] {
+        font-size: 2.1rem !important;
+        font-weight: 800 !important;
+        color: #0b5f6b !important;
+    }
+    div[data-testid="stMetricLabel"] {
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        color: #355359 !important;
+    }
+
+    /* ---------- Headings ---------- */
+    h1 { color: #0b5f6b; font-weight: 800; }
+    h2, h3 { color: #0b5f6b; font-weight: 700; }
+    .stApp p, .stApp label, .stApp span { color: #2b3a3d; }
+
+    /* ---------- Sidebar ---------- */
+    section[data-testid="stSidebar"] {
+        background-color: #eef6f5;
+        border-right: 1px solid #d8e8e6;
+    }
+    section[data-testid="stSidebar"] h3 {
+        color: #0b5f6b;
+        font-weight: 800;
+    }
+
+    /* ---------- Section radio buttons (look like professional tabs) ---------- */
+    div[role="radiogroup"] label {
+        background: #ffffff;
+        border: 1px solid #d8e8e6;
+        border-radius: 8px;
+        padding: 6px 14px;
+        margin-right: 6px;
+        font-weight: 600;
+        color: #0b5f6b;
+    }
+
+    /* ---------- Department cards ---------- */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        border-radius: 12px !important;
+        border: 1px solid #d8e8e6 !important;
+        background: #ffffff !important;
+    }
+    div[data-testid="stVerticalBlockBorderWrapper"] h3 {
+        font-size: 1.15rem !important;
+        color: #0b5f6b !important;
+    }
+
+    /* ---------- Dataframes ---------- */
+    div[data-testid="stDataFrame"] {
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #d8e8e6;
+    }
 </style>
 """, unsafe_allow_html=True)
+
+
+def render_logo_banner(subtitle: str):
+    """Professional hospital-style banner with logo badge, shown at the top of every view."""
+    st.markdown(f"""
+    <div class="srikara-banner">
+        <div class="logo-badge">🏥</div>
+        <div class="banner-text">
+            <h1>SRIKARA HOSPITALS</h1>
+            <p>{subtitle}</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ---------------------------------------------------------------------
 # Load data ONCE, shared by every view
@@ -81,8 +193,7 @@ with st.sidebar:
 # VIEW: CLUSTER DASHBOARD
 # =======================================================================
 def render_cluster_dashboard():
-    st.title("🏥 Srikara Hospitals — Cluster Dashboard")
-    st.caption("Executive overview across all departments, updated live from the Unit Tracker sheet.")
+    render_logo_banner("Cluster Dashboard &nbsp;•&nbsp; Executive overview across all departments")
 
     f1, f2, f3 = st.columns([2, 1.2, 2])
     with f1:
@@ -370,8 +481,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
     if st.button("← Back to Cluster Dashboard"):
         go_to_cluster_dashboard()
 
-    st.title(f"{dept_icon} {dept_name} — Unit Dashboard")
-    st.caption(f"Owner: {dept_owner}")
+    render_logo_banner(f"{dept_icon} {dept_name} Unit Dashboard &nbsp;•&nbsp; Owner: {dept_owner}")
 
     dept_df = df[df["Department"] == dept_name].reset_index(drop=True)
     if dept_df.empty:
@@ -454,7 +564,10 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
                 with st.container(border=True):
                     col_a, col_b = st.columns([3, 1])
                     with col_a:
-                        st.markdown(f"**{row['Particulars']}**")
+                        st.markdown(
+                            f"<span style='font-size:1.15rem; font-weight:700; color:#0b5f6b;'>{row['Particulars']}</span>",
+                            unsafe_allow_html=True,
+                        )
                         st.caption(
                             f"Today: {row.get('Today', 'N/A')} • MTD: {row.get('MTD', 'N/A')} • "
                             f"Target: {row.get('Target', 'N/A')} • Last Month: {row.get('Last Month', 'N/A')}"
