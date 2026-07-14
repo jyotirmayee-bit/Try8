@@ -14,14 +14,19 @@ import pandas as pd
 
 # ---------------------------------------------------------------------------
 # COLOR THEME  (used everywhere so every chart/page looks consistent)
+# A calmer, professional "hospital" palette -- deep teal as the anchor color,
+# softer status colors so the dashboard reads as clinical and trustworthy
+# rather than alarm-heavy.
 # ---------------------------------------------------------------------------
 THEME = {
-    "On Track": "#16a34a",
-    "Off Track": "#dc2626",
-    "No Data": "#94a3b8",
-    "Not Measurable": "#2563eb",
-    "primary": "#0f4c81",
-    "accent": "#f59e0b",
+    "On Track": "#2e8b74",       # calm teal-green
+    "Off Track": "#d64545",      # muted clinical red (not neon)
+    "No Data": "#a3aab5",        # soft slate gray
+    "Not Measurable": "#4a7fb5", # soft steel blue
+    "primary": "#0b5f6b",        # deep teal -- the hospital's anchor color
+    "secondary": "#0e7c86",      # lighter teal for gradients/accents
+    "accent": "#d9a441",         # warm gold accent (used sparingly)
+    "background": "#f4f9f9",     # very light teal-tinted background
 }
 
 STATUS_COLORS = {
