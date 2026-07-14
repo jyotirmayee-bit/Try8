@@ -31,7 +31,7 @@ st.markdown("""
 <style>
     /* ---------- Overall app background ---------- */
     .stApp {
-        background-color: #21282b;
+        background-color: #bce4ec;
     }
 
     /* ---------- Logo / hospital banner ---------- */
@@ -39,11 +39,11 @@ st.markdown("""
         display: flex;
         align-items: center;
         gap: 22px;
-        background: linear-gradient(120deg, #2a3236 0%, #39444a 100%);
+        background: linear-gradient(120deg, #4fc3f7 0%, #7ec8e3 100%);
         padding: 18px 28px;
         border-radius: 14px;
         margin-bottom: 22px;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+        box-shadow: 0 3px 10px rgba(11, 95, 107, 0.25);
     }
     .srikara-banner .logo-badge {
         width: 210px;
@@ -55,7 +55,7 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         padding: 8px 14px;
     }
     .srikara-banner .logo-badge img {
@@ -72,66 +72,66 @@ st.markdown("""
     /* ---------- KPI metric cards ---------- */
 
     div[data-testid="stMetric"] {
-        background: #2a3236;
-        border: 1px solid #3f4a4f;
-        border-left: 5px solid #4fc3f7;
+        background: #ffffff;
+        border: 1px solid #a8d8e0;
+        border-left: 5px solid #1f77a8;
         border-radius: 12px;
         padding: 16px 18px 12px 18px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 2px 6px rgba(11, 95, 107, 0.12);
     }
     div[data-testid="stMetricValue"] {
         font-size: 2.1rem !important;
         font-weight: 800 !important;
-        color: #4fc3f7 !important;
+        color: #1f77a8 !important;
     }
     div[data-testid="stMetricLabel"] {
         font-size: 1rem !important;
         font-weight: 600 !important;
-        color: #b9c6d6 !important;
+        color: #355359 !important;
     }
 
     /* ---------- Headings ---------- */
-    h1 { color: #ffffff; font-weight: 800; }
-    h2, h3 { color: #4fc3f7; font-weight: 700; }
-    .stApp p, .stApp label, .stApp span { color: #cfd8e3; }
+    h1 { color: #0b5f6b; font-weight: 800; }
+    h2, h3 { color: #0b5f6b; font-weight: 700; }
+    .stApp p, .stApp label, .stApp span { color: #2b3a3d; }
 
     /* ---------- Sidebar ---------- */
     section[data-testid="stSidebar"] {
-        background-color: #2a3236;
-        border-right: 1px solid #3f4a4f;
+        background-color: #d9eef3;
+        border-right: 1px solid #a8d8e0;
     }
     section[data-testid="stSidebar"] h3 {
-        color: #4fc3f7;
+        color: #0b5f6b;
         font-weight: 800;
     }
 
     /* ---------- Section radio buttons (look like professional tabs) ---------- */
     div[role="radiogroup"] label {
-        background: #2a3236;
-        border: 1px solid #3f4a4f;
+        background: #ffffff;
+        border: 1px solid #a8d8e0;
         border-radius: 8px;
         padding: 6px 14px;
         margin-right: 6px;
         font-weight: 600;
-        color: #4fc3f7;
+        color: #0b5f6b;
     }
 
     /* ---------- Department cards ---------- */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         border-radius: 12px !important;
-        border: 1px solid #3f4a4f !important;
-        background: #2a3236 !important;
+        border: 1px solid #a8d8e0 !important;
+        background: #ffffff !important;
     }
     div[data-testid="stVerticalBlockBorderWrapper"] h3 {
         font-size: 1.15rem !important;
-        color: #4fc3f7 !important;
+        color: #0b5f6b !important;
     }
 
     /* ---------- Dataframes ---------- */
     div[data-testid="stDataFrame"] {
         border-radius: 10px;
         overflow: hidden;
-        border: 1px solid #3f4a4f;
+        border: 1px solid #a8d8e0;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -149,7 +149,7 @@ def render_logo_banner(subtitle: str):
                        margin:0; line-height:1.15; text-shadow:0 1px 3px rgba(0,0,0,0.4);">
                 SRIKARA HOSPITALS
             </h1>
-            <p style="color:#b9c6d6; margin:4px 0 0 0; font-weight:500; font-size:1rem;">{subtitle}</p>
+            <p style="color:#eaf7fb; margin:4px 0 0 0; font-weight:500; font-size:1rem;">{subtitle}</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -261,21 +261,21 @@ def render_cluster_dashboard():
             gauge = go.Figure(go.Indicator(
                 mode="gauge+number",
                 value=overall_health,
-                number={"suffix": "%", "font": {"color": "#4fc3f7"}},
+                number={"suffix": "%", "font": {"color": "#1f77a8"}},
                 gauge={
                     "axis": {"range": [0, 100]},
                     "bar": {"color": THEME["gauge_bar"]},
-                    "bgcolor": "#2a3236",
+                    "bgcolor": "#ffffff",
                     "steps": [
-                        {"range": [0, 50], "color": "#2c3336"},
-                        {"range": [50, 80], "color": "#333c40"},
-                        {"range": [80, 100], "color": "#26343a"},
+                        {"range": [0, 50], "color": "#fdf6d8"},
+                        {"range": [50, 80], "color": "#eef3f5"},
+                        {"range": [80, 100], "color": "#dff3fa"},
                     ],
                     "threshold": {"line": {"color": "#ffd93d", "width": 3}, "value": 80},
                 },
             ))
             gauge.update_layout(margin=dict(t=30, b=10, l=20, r=20), height=280,
-                                paper_bgcolor="rgba(0,0,0,0)", font={"color": "#cfd8e3"})
+                                paper_bgcolor="rgba(0,0,0,0)", font={"color": "#2b3a3d"})
             st.plotly_chart(gauge, use_container_width=True, key="cluster_gauge")
 
         with mid:
@@ -290,7 +290,7 @@ def render_cluster_dashboard():
                              color_discrete_map=THEME, barmode="stack")
                 fig.update_layout(xaxis_tickangle=-30, legend_title_text="", margin=dict(t=10), height=280,
                                   paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                                  font={"color": "#cfd8e3"})
+                                  font={"color": "#2b3a3d"})
                 st.plotly_chart(fig, use_container_width=True, key="cluster_status_bar")
             else:
                 st.info("No data matches the current filters.")
@@ -303,7 +303,7 @@ def render_cluster_dashboard():
                 fig2 = px.pie(donut_df, names="Status", values="Count", hole=0.55,
                               color="Status", color_discrete_map=THEME)
                 fig2.update_layout(showlegend=True, margin=dict(t=10), height=280,
-                                   paper_bgcolor="rgba(0,0,0,0)", font={"color": "#cfd8e3"})
+                                   paper_bgcolor="rgba(0,0,0,0)", font={"color": "#2b3a3d"})
                 st.plotly_chart(fig2, use_container_width=True, key="cluster_donut")
             else:
                 st.info("No data to show.")
@@ -317,8 +317,8 @@ def render_cluster_dashboard():
                                    color="Status", color_discrete_map=THEME,
                                    color_discrete_sequence=TREEMAP_SEQUENCE)
             fig_tree.update_traces(
-                textfont=dict(color="#21282b", size=14, family="Arial Black"),
-                marker=dict(line=dict(color="#21282b", width=2)),
+                textfont=dict(color="#22303a", size=14, family="Arial Black"),
+                marker=dict(line=dict(color="#ffffff", width=2)),
             )
             fig_tree.update_layout(margin=dict(t=10, b=10, l=10, r=10), paper_bgcolor="rgba(0,0,0,0)")
             st.plotly_chart(fig_tree, use_container_width=True, key="cluster_treemap")
@@ -335,7 +335,7 @@ def render_cluster_dashboard():
             fig3.update_traces(texttemplate="%{text}%", textposition="outside")
             fig3.update_layout(coloraxis_showscale=False, margin=dict(t=10), xaxis_range=[0, 110],
                                paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                               font={"color": "#cfd8e3"})
+                               font={"color": "#2b3a3d"})
             st.plotly_chart(fig3, use_container_width=True, key="cluster_health_ranking")
         else:
             st.info("No data matches the current filters.")
@@ -385,7 +385,7 @@ def render_cluster_dashboard():
             fig4.update_traces(line_color=THEME["primary"], fillcolor="rgba(79,195,247,0.20)",
                                line_width=3, marker_size=10)
             fig4.update_layout(margin=dict(t=10), paper_bgcolor="rgba(0,0,0,0)",
-                              plot_bgcolor="rgba(0,0,0,0)", font={"color": "#cfd8e3"})
+                              plot_bgcolor="rgba(0,0,0,0)", font={"color": "#2b3a3d"})
             st.plotly_chart(fig4, use_container_width=True, key="cluster_trend_area")
         else:
             st.info("Not enough numeric data across Last Month / MTD / Today yet to plot a trend.")
@@ -410,7 +410,7 @@ def render_cluster_dashboard():
                     marker={"color": [THEME["primary"], THEME["accent"]]},
                 ))
                 fig_funnel.update_layout(title=conv["label"], margin=dict(t=40, b=10), height=260,
-                                        paper_bgcolor="rgba(0,0,0,0)", font={"color": "#cfd8e3"})
+                                        paper_bgcolor="rgba(0,0,0,0)", font={"color": "#2b3a3d"})
                 st.plotly_chart(fig_funnel, use_container_width=True, key=f"funnel_{conv['label']}")
         else:
             st.info(
@@ -434,7 +434,7 @@ def render_cluster_dashboard():
                 fig5.update_traces(texttemplate="%{text}%", textposition="outside")
                 fig5.update_layout(showlegend=False, margin=dict(t=10), yaxis_range=[0, 110],
                                   paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                                  font={"color": "#cfd8e3"})
+                                  font={"color": "#2b3a3d"})
                 st.plotly_chart(fig5, use_container_width=True, key="deepdive_bar")
 
                 st.dataframe(
@@ -455,7 +455,7 @@ def render_cluster_dashboard():
                             fill="toself", name=row["Department"],
                         ))
                     radar_fig.update_layout(margin=dict(t=10), height=380,
-                                            paper_bgcolor="rgba(0,0,0,0)", font={"color": "#cfd8e3"})
+                                            paper_bgcolor="rgba(0,0,0,0)", font={"color": "#2b3a3d"})
                     st.plotly_chart(radar_fig, use_container_width=True, key="deepdive_radar")
 
                 with bubble_col:
@@ -465,7 +465,7 @@ def render_cluster_dashboard():
                     bubble_fig.update_traces(textposition="top center")
                     bubble_fig.update_layout(margin=dict(t=10), height=380, yaxis_range=[-5, 110], showlegend=False,
                                              paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                                             font={"color": "#cfd8e3"})
+                                             font={"color": "#2b3a3d"})
                     st.plotly_chart(bubble_fig, use_container_width=True, key="deepdive_bubble")
             else:
                 st.info("No data for the selected departments under the current filters.")
@@ -481,8 +481,8 @@ def render_cluster_dashboard():
                                   color="Status", color_discrete_map=THEME,
                                   color_discrete_sequence=TREEMAP_SEQUENCE)
             fig_sun.update_traces(
-                textfont=dict(color="#21282b", size=13, family="Arial Black"),
-                marker=dict(line=dict(color="#21282b", width=2)),
+                textfont=dict(color="#22303a", size=13, family="Arial Black"),
+                marker=dict(line=dict(color="#ffffff", width=2)),
             )
             fig_sun.update_layout(margin=dict(t=10, b=10, l=10, r=10), height=500, paper_bgcolor="rgba(0,0,0,0)")
             st.plotly_chart(fig_sun, use_container_width=True, key="cluster_sunburst")
@@ -545,19 +545,19 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
         with gauge_col:
             st.markdown("#### Health Gauge")
             gauge = go.Figure(go.Indicator(
-                mode="gauge+number", value=health_score, number={"suffix": "%", "font": {"color": "#4fc3f7"}},
+                mode="gauge+number", value=health_score, number={"suffix": "%", "font": {"color": "#1f77a8"}},
                 gauge={
                     "axis": {"range": [0, 100]}, "bar": {"color": THEME["gauge_bar"]},
-                    "bgcolor": "#2a3236",
+                    "bgcolor": "#ffffff",
                     "steps": [
-                        {"range": [0, 50], "color": "#2c3336"},
-                        {"range": [50, 80], "color": "#333c40"},
-                        {"range": [80, 100], "color": "#26343a"},
+                        {"range": [0, 50], "color": "#fdf6d8"},
+                        {"range": [50, 80], "color": "#eef3f5"},
+                        {"range": [80, 100], "color": "#dff3fa"},
                     ],
                 },
             ))
             gauge.update_layout(margin=dict(t=20, b=10, l=20, r=20), height=250,
-                                paper_bgcolor="rgba(0,0,0,0)", font={"color": "#cfd8e3"})
+                                paper_bgcolor="rgba(0,0,0,0)", font={"color": "#2b3a3d"})
             st.plotly_chart(gauge, use_container_width=True, key="unit_gauge")
 
         with donut_col:
@@ -567,7 +567,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
             donut = px.pie(status_counts, names="Status", values="Count", hole=0.55,
                            color="Status", color_discrete_map=THEME)
             donut.update_layout(margin=dict(t=20, b=10), height=250,
-                               paper_bgcolor="rgba(0,0,0,0)", font={"color": "#cfd8e3"})
+                               paper_bgcolor="rgba(0,0,0,0)", font={"color": "#2b3a3d"})
             st.plotly_chart(donut, use_container_width=True, key="unit_donut")
 
         st.divider()
@@ -579,7 +579,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
             fig_rank.update_traces(texttemplate="%{text}%", textposition="outside")
             fig_rank.update_layout(margin=dict(t=10), height=max(250, 40 * len(ranked_df)),
                                   paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                                  font={"color": "#cfd8e3"})
+                                  font={"color": "#2b3a3d"})
             st.plotly_chart(fig_rank, use_container_width=True, key="unit_achievement_rank")
         else:
             st.info("No KPIs with a numeric target/achievement value yet.")
@@ -612,7 +612,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
                     with col_b:
                         st.markdown(
                             f"<div style='text-align:center; font-size:1.8rem;'>{row['Status Icon']}</div>"
-                            f"<div style='text-align:center; font-size:0.85rem; color:#b9c6d6;'>{row['Status']}</div>",
+                            f"<div style='text-align:center; font-size:0.85rem; color:#5a6b70;'>{row['Status']}</div>",
                             unsafe_allow_html=True,
                         )
 
@@ -627,7 +627,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
             fig.update_traces(line_color=THEME["primary"], fillcolor="rgba(79,195,247,0.20)",
                               line_width=3, marker_size=10)
             fig.update_layout(margin=dict(t=10), paper_bgcolor="rgba(0,0,0,0)",
-                             plot_bgcolor="rgba(0,0,0,0)", font={"color": "#cfd8e3"})
+                             plot_bgcolor="rgba(0,0,0,0)", font={"color": "#2b3a3d"})
             st.plotly_chart(fig, use_container_width=True, key="unit_trend_area")
         else:
             st.info("Not enough numeric data yet across Last Month / MTD / Today to plot a trend.")
@@ -642,7 +642,7 @@ def render_unit_dashboard(dept_name: str, dept_icon: str, dept_owner: str):
                     fig2.update_traces(marker_color=THEME["accent"])
                     fig2.update_layout(margin=dict(t=10), height=280,
                                       paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                                      font={"color": "#cfd8e3"})
+                                      font={"color": "#2b3a3d"})
                     st.plotly_chart(fig2, use_container_width=True, key=f"kpi_trend_{dept_name}_{idx}")
 
     # --- FULL DATA ---
