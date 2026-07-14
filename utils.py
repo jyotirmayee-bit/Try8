@@ -14,35 +14,35 @@ import pandas as pd
 
 # ---------------------------------------------------------------------------
 # COLOR THEME  (used everywhere so every chart/page looks consistent)
-# A fresh, light "hospital" palette -- deep teal as the anchor color for
-# headings/branding, softer pastel tones for chart status colors so the
-# dashboard reads as calm and clinical rather than alarm-heavy.
+# Dark-navy "command center" palette inspired by the reference dashboard:
+# light blue = good / on track, bright yellow = attention / off track,
+# deep navy for backgrounds and branding.
 # ---------------------------------------------------------------------------
 THEME = {
-    "On Track": "#b8e0c8",       # light pastel green
-    "Off Track": "#f4c6c6",      # light pastel rose (softer than red, still reads as "attention")
-    "No Data": "#d7e3ef",        # light pastel blue
-    "Not Measurable": "#ddd3ef", # light pastel purple/lavender
-    "primary": "#0b5f6b",        # deep teal -- kept only for text/branding, never for large fills
-    "secondary": "#0e7c86",      # teal for gradients/accents (text-scale use only)
-    "accent": "#f5e6a8",         # light pastel yellow accent
-    "gauge_bar": "#9fd3d9",      # light pastel teal for gauge needles/bars (replaces the dark teal fill)
-    "background": "#f4f9f9",     # very light teal-tinted page background
+    "On Track": "#4fc3f7",       # light / sky blue  (was pastel green)
+    "Off Track": "#ffd93d",      # bright yellow      (was pastel red)
+    "No Data": "#5c6f8a",        # muted slate blue-gray
+    "Not Measurable": "#b39ddb", # light purple/lavender
+    "primary": "#4fc3f7",        # light blue -- headings/branding/lines
+    "secondary": "#1f3a5f",      # deep navy accent
+    "accent": "#ffd93d",         # bright yellow accent
+    "gauge_bar": "#4fc3f7",      # light blue gauge fill
+    "background": "#0f1a2e",     # dark navy page background
 }
 
-# Soft pastel palette used for treemap/sunburst PARENT-level boxes (e.g. each
-# Department), cycling through light blue / yellow / purple / green so the
-# whole chart reads as one consistent light pastel family.
+# Palette used for treemap/sunburst PARENT-level boxes (e.g. each
+# Department), cycling through navy / yellow / purple / blue / orange so the
+# whole chart reads as one consistent "dark dashboard" family.
 TREEMAP_SEQUENCE = [
-    "#d7e3ef", "#f5e6a8", "#ddd3ef", "#c5e8d4", "#f4d9c6",
-    "#d7e3ef", "#f5e6a8", "#ddd3ef", "#c5e8d4", "#f4d9c6",
+    "#1f3a5f", "#ffd93d", "#b39ddb", "#4fc3f7", "#f4a259",
+    "#1f3a5f", "#ffd93d", "#b39ddb", "#4fc3f7", "#f4a259",
 ]
 
 STATUS_COLORS = {
-    "On Track": "🟢",
-    "Off Track": "🔴",
+    "On Track": "🔵",
+    "Off Track": "🟡",
     "No Data": "⚪",
-    "Not Measurable": "🔵",
+    "Not Measurable": "🟣",
 }
 
 
