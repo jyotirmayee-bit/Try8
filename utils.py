@@ -27,7 +27,7 @@ THEME = {
     "secondary": "#3f4a4f",      # dark slate gray accent
     "accent": "#ffd93d",         # bright yellow accent
     "gauge_bar": "#4fc3f7",      # light blue gauge fill
-    "background": "#21282b",     # dark slate gray page background
+    "background": "#bce4ec",      # powder blue page background
 }
 
 # Palette used for treemap/sunburst PARENT-level boxes (e.g. each
