@@ -19,13 +19,13 @@ import pandas as pd
 # dashboard reads as calm and clinical rather than alarm-heavy.
 # ---------------------------------------------------------------------------
 THEME = {
-    "On Track": "#6fbf9b",       # fresh pastel mint-green
-    "Off Track": "#f08a8a",      # soft pastel coral-red
-    "No Data": "#c3cad3",        # light pastel gray
-    "Not Measurable": "#8fb8e0", # soft pastel sky blue
-    "primary": "#0b5f6b",        # deep teal -- the hospital's anchor color
+    "On Track": "#9bd4b8",       # light pastel mint-green
+    "Off Track": "#f2a8a8",      # light pastel coral-red
+    "No Data": "#d5dae0",        # very light pastel gray
+    "Not Measurable": "#aecbe8", # light pastel sky blue
+    "primary": "#0b5f6b",        # deep teal -- the hospital's anchor color (kept for headings/branding)
     "secondary": "#0e7c86",      # lighter teal for gradients/accents
-    "accent": "#e0b45c",         # warm pastel gold accent (used sparingly)
+    "accent": "#e8c581",         # light pastel gold accent (used sparingly)
     "background": "#f4f9f9",     # very light teal-tinted background
 }
 
@@ -33,8 +33,8 @@ THEME = {
 # Department), so those boxes read as fresh and light rather than the bold
 # default plotly qualitative colors.
 TREEMAP_SEQUENCE = [
-    "#cfe3e0", "#d9d3ea", "#f6dcd3", "#d6e8d0", "#f7e6b8",
-    "#d3e3f0", "#eed6e6", "#dcecec", "#e6ddd0", "#d8e0ef",
+    "#dcebe8", "#e5e0f0", "#faeae3", "#e3f0de", "#faf0d2",
+    "#e0edf6", "#f5e5ee", "#e6f2f2", "#f0e9dd", "#e5eaf5",
 ]
 
 STATUS_COLORS = {
